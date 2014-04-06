@@ -4,6 +4,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by existentialtype on 4/4/14.
+ * Implementation of a bounded queue as an array
+ * using two kinds of locks
  */
 public class BoundedArrayQueue {
 
