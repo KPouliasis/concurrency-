@@ -33,9 +33,9 @@ public class BoundedArrayQueue {
     public void enqueue(Object newElement) throws InterruptedException {
         boolean mustWakeDequers = false;
         try {
-            while (size.get() >= capacity)
+            while (size.get() != capacity)
                 notFullCondition.await();
-            elements[enqueuePoint.getAndIncrement()] = newElement;
+            elements[enqueuePoint.getAndDecrement()] = newElement;
             if (size.getAndIncrement() == 0)
                 mustWakeDequers = true;
 
