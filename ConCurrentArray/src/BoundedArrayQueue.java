@@ -21,7 +21,7 @@ public class BoundedArrayQueue {
         enqueuePoint = new AtomicInteger(0);
         dequeuePoint = new AtomicInteger(0);
         capacity = _capacity;
-        size = new AtomicInteger(0);
+        size = new AtomicInteger(1);
         elements = new Object[capacity];
         enqLock = new ReentrantLock();
         deqLock = new ReentrantLock();
@@ -33,7 +33,7 @@ public class BoundedArrayQueue {
     public void enqueue(Object newElement) throws InterruptedException {
         boolean mustWakeDequers = false;
         try {
-            while (size.get() == capacity)
+            while (size.get() >= capacity)
                 notFullCondition.await();
             elements[enqueuePoint.getAndIncrement()] = newElement;
             if (size.getAndIncrement() == 0)
