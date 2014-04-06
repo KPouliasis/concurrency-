@@ -1,0 +1,33 @@
+1.The add method has a linerization point. When the method succeds the point of linerization is the point where the locks on the two subseqent nodes have been acquired (line 7 or line 13). When the method is failing the point of linearization is the point where the key to be inserted is locked. 
+
+2.
+
+public boolean contains(T item) {
+	int	 key = item.hashCode();
+	head.lock();
+	Node curr = head;
+	try {
+            while(curr.key<key) {
+              curr.next.lock();
+              curr.unlock();
+	      curr= curr.next;
+	
+	
+	}
+				
+
+	if (curr.key == key) {
+		return true;
+           }
+	else {return false;}
+
+
+       } finally {
+          curr.unlock();
+        }
+
+THE contains method need only have the lock on the current node it is exploring.
+This way by the design of the other methods : a. it is impossible for an add method called after a contains to add something new past the node  currently observed by the contains method in question
+(of course it can add the current node  but this behavior is linearizable)
+b. any thread that is working in front of a contains method (it had already obtained the lock somewhere further on the list), it will be observed by the contains method after the lock it is realized and the object is viwed as "current" by the contains method.
+c. similarily for delete. 

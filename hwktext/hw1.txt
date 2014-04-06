@@ -1,0 +1,55 @@
+EXERCISE 4
+
+a. Winnging Strategy"
+
+Select one prisoner as the monitor. His strategy is:
+Initialize your counter to 0;
+When enter the room if the switch is off turn it on and add one to your counter;
+When your counter equals P declare "we were all in the switch room at least once"
+
+
+For all other P-1 prisoners. Their strategy is:
+When you enter the room:
+If (the switch is on and you never turned it off before), turn it off.
+Else leave the switch as it was.
+
+b. Winning Strategy:
+
+Select one prisoner as the monitor. His strategy is:
+Initialize your counter to 0;
+When enter the room for the first time add one to your counter and change the switch and remember its new state.
+For everyother time you enter the room :
+if the state is different from the one you left it
+previously add one to your counter. In any case change the switch.If your counter is P announce that "all prisoners were in".
+
+
+
+
+For all other P-1 prisoners. Their strategy is:
+You have only one change to make.
+If in two consecutive times you enter the room the counter has changed from OFF(previous time) to ON (current time). Change it to OFF. From now on you don't make any changes entering the room.
+In any other case make no changes to the switch.
+
+
+EXERCISE 6
+
+      1    
+S= ==============   
+
+
+    1- p + p/n
+
+a. for p= 0.4
+
+S_lim=   1 / 1-0.4=1/0.6= 10/6
+
+b. sn= 1/ (1-0.7+0.7/n)
+
+  We want k s.t sn'= 1/ ((1-0.7)/k +0.7/n )> 2 sn ==>
+  k>6/(3-7/n)
+
+c.2= 1/((1-p)/3 + p/n)  ===> p= 6n/(3-n)
+	==>s= 1 - 6n/(3-n)			
+
+
+  n->oo

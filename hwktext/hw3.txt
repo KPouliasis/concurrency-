@@ -1,0 +1,17 @@
+Question 1 
+
+First figure
+Sequentially consistent.
+Rewrite the history as : 
+r.write(1)- r.read(1) - r.write(2)- r.read(2)
+
+It is sequential and preserves program order.
+
+Yes: Since three first method overlap we can reorder them
+as before based on linerization points.
+
+
+
+Second Figure
+Sequentially consistent
+r.write(2)- r.write(1) - r.read(1)- r.read(1)

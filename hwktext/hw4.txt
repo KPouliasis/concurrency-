@@ -1,0 +1,47 @@
+1. If the same thread gets the lock and then asks for it again - without any other thread occupying the tail in between -
+then he becomes his own predecessor after having set its "busy" field already to true. He then waits for his self inifinetely. Schematically.
+
+
+TAIL        TAIL           TAIL                                         TAIL
+false        NodeA        NodeA                                        NodeA
+	     busy true	  busy False                                   busyA True  BAD!!!                              
+             predA=null   predA=null   ThreadA with NodeA RE-ENTERS    predA=NodeA
+									
+                                             
+
+2. The contrast is analogous to the one between TTAS and Queue Locks. 
+The first approach includes "spinning" on the same global variable and hence contention when a lock is released and there is lots of thread traffic. 
+The other approach requires linear space and invkoes local spinnning (of course someone has to take care of false sharing as in the array queue lock).
+We are expecting the second approach to be working better with larger amount of competing threads.
+
+3. Boolean testAndSeExistsLock(){
+      state.get()
+
+   }
+   Boolean  clhExistsLock(){
+      if (tail.get()==null)
+	 return false;
+      else
+	  return tail.get().locked; 
+    }
+   Boolean mcsExistsLock(){
+       if (tail.get()==null) 
+	  return false;
+	else 
+	  return (not tail.get().locked);
+	
+
+	}
+
+4. The code does not cover the null case. Replace as follows:
+
+ public void lock() {
+  QNode qnode = myNode.get();
+  qnode.locked = true;
+  QNode pred = tail.getAndSet(qnode);
+  myPred.set(pred);
+  if (myprde.get()!=null)
+  while (pred.locked) {}
+   }
+ 
+

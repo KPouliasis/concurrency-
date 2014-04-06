@@ -1,0 +1,11 @@
+Exercise 94
+
+Permitting this type of "polymorphic" (both read/write threads) seems costly. The fact that 
+the read block can "tolerate" many readers but only one "writer" is exactly where things become complex. It is easier to implement such a behavior but classifying threads to readers and writers. This way you can observe cleary when a writer holds the lock and prevent other writers from entering it. This classification is static. It is decided upon the creation of the thread and it never changes. A dynamic approach would be troublesome since a thread's id no longer gives information about if it is allowed to take a lock or not.
+
+Exercise 95
+
+3. No. Transactions might not finish although there will be sufficient funds in the accounts.
+The threads might get interrupted when in "waiting room" state before they get notified at 2AM.
+
+

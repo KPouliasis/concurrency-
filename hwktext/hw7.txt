@@ -1,0 +1,14 @@
+Exercise 123
+
+All persons/ threads are sitting circularily around the stew.
+Each thread- person should operate as follows REPETIVELY:
+1.Get stew (no need to protect the stew by a lock by the specifications)
+2. Starting from the left and in a circular way if needed find the next of the fellows that is not beeing fed and is hungry.
+3. If you are hungry and food is offered eat it. Push the spon away if you are not hungry.
+
+
+The algorithm is decentralized and low contention since  there is no "spinning" to feed someone.
+Once a thread fails to feed someone it moves to the next.
+It is starvation free since each thread has spoon and starts rotating it towards its left.
+It is deterministic.
+

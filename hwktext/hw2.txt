@@ -1,0 +1,48 @@
+writeA(turn=A)->readA(busy=false)->writeA(busy=true)->readA(turn=A)->CSA
+
+writeB(turn=B)->readB(busy=false)->writeB(busy=true)->readB(turn=B)->csb
+
+Satisfies mutual exclusion. Suppose not and w.o.l.o.g suppose A got in first.
+that means that readA(turn=A)->readB(turn=B)
+also either:
+
+writeB(turn=B)->writeA(turn=A): Impossible since no other readB(turn=B) will always fail
+
+
+
+
+Deadlock free 
+
+No. For any B: writeA(turn=A)->readA(busy=false)->writeA(busy=true)->writeB(turn=B)->Deadlock
+
+Starvation free:
+No. This would imply deadlock free!
+
+
+2. Subtract  l-1 levels to the current algorithm.
+
+ class Filter implements Lock {
+ int[] level;
+ int[] victim;
+ public Filter(int n, int l) {
+ 	level = new int[max(n-l+1,0)];
+ 	victim = new int[max(n-l+1,0)]; // use 1..n-1
+ 	for (int i = 0; i < n-l+1; i++) {
+ 		level[i] = 0;
+ 	}
+    }
+ public void lock() {
+ 	int me = ThreadID.get();
+ 	for (int i = 1; i < n-l+1; i++) { // attempt level i
+ 		level[me] = i;
+ 		victim[i] = me;
+		 // spin while conflicts exist
+ 	while ((∃k != me) (level[k] >= i && victim[i] == me)) {};
+ 	}
+    }
+ public void unlock() {
+ int me = ThreadID.get();
+ level[me] = 0;
+ }
+ }
+
